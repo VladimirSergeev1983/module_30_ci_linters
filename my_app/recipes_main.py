@@ -14,13 +14,16 @@ app = FastAPI()
 
 @app.on_event("startup")
 async def startup():
+    print('Starting system.')
     if not os.path.exists('recipe_book.db'):
         async with engine.begin() as conn:
+            print('Creating DB tables.')
             await conn.run_sync(models_rb.Base.metadata.create_all)
 
 
 @app.on_event("shutdown")
 async def shutdown():
+    print('Closing DB sessions')
     await session.close()
     await engine.dispose()
 
