@@ -39,7 +39,8 @@ async def create_recipes(recipe: schemas_rb.RecipeIn) -> models_rb.Recipe:
 async def get_recipes() -> List[models_rb.Recipe]:
     res = await session.execute(
         select(models_rb.Recipe).order_by(
-            models_rb.Recipe.views_number.desc(), models_rb.Recipe.cooking_time.desc()
+            models_rb.Recipe.views_number.desc(), 
+            models_rb.Recipe.cooking_time.desc()
         )
     )
     return res.scalars().all()
@@ -55,7 +56,9 @@ async def get_recipes_by_id(idx: int) -> models_rb.Recipe:
         raise HTTPException(status_code=404, detail="Recipe not found")
     new_views = views_num + 1
     await session.execute(
-        update(models_rb.Recipe).filter_by(id=idx).values(views_number=new_views)
+        update(models_rb.Recipe).filter_by(id=idx).values(
+            views_number=new_views
+        )
     )
     await session.commit()
     res = await session.execute(select(models_rb.Recipe).filter_by(id=idx))
