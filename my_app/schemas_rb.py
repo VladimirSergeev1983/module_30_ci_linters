@@ -8,13 +8,13 @@ class BaseRecipe(BaseModel):
         title="Title of the recipe",
         min_length=2,
         max_length=50,
-        description="The name of the recipe should be from 2 to 50 characters"
+        description="The name of the recipe should be from 2 to 50 characters",
     )
     cooking_time: int = Field(
         ...,
         title="Cooking time",
         gt=0,
-        description="The cooking time should be greater than zero"
+        description="The cooking time should be greater than zero",
     )
     ingredients: str = Field(..., title="List of ingredients")
     description: Optional[str] = Field(..., title="Text description of the recipe")
