@@ -1,13 +1,12 @@
 import os
 from typing import List
 
-from fastapi import FastAPI, HTTPException
-from sqlalchemy import update
-from sqlalchemy.future import select
-
 import models_rb
 import schemas_rb
 from database_rb import engine, session
+from fastapi import FastAPI, HTTPException
+from sqlalchemy import update
+from sqlalchemy.future import select
 
 app = FastAPI()
 
