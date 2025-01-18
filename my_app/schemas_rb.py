@@ -18,7 +18,10 @@ class BaseRecipe(BaseModel):
         description="The cooking time should be greater than zero",
     )
     ingredients: str = Field(..., title="List of ingredients")
-    description: Optional[str] = Field(..., title="Text description of the recipe")
+    description: Optional[str] = Field(
+        ..., 
+        title="Text description of the recipe",
+    )
 
 
 class RecipeIn(BaseRecipe):
