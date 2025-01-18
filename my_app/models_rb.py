@@ -1,6 +1,5 @@
-from sqlalchemy import Column, String, Integer
-
 from database_rb import Base
+from sqlalchemy import Column, String, Integer
 
 
 class Recipe(Base):
