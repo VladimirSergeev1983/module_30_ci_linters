@@ -28,7 +28,7 @@ async def shutdown():
 
 
 @app.post("/recipes/", response_model=schemas_rb.RecipeOut)
-async def recipes(recipe: schemas_rb.RecipeIn) -> models_rb.Recipe:
+async def create_recipes(recipe: schemas_rb.RecipeIn) -> models_rb.Recipe:
     new_recipe = models_rb.Recipe(**recipe.dict())
     async with session.begin():
         session.add(new_recipe)
@@ -36,7 +36,7 @@ async def recipes(recipe: schemas_rb.RecipeIn) -> models_rb.Recipe:
 
 
 @app.get("/recipes/", response_model=List[schemas_rb.RecipeOutResponse])
-async def recipes() -> List[models_rb.Recipe]:
+async def get_recipes() -> List[models_rb.Recipe]:
     res = await session.execute(
         select(models_rb.Recipe).order_by(
             models_rb.Recipe.views_number.desc(), models_rb.Recipe.cooking_time.desc()
@@ -46,7 +46,7 @@ async def recipes() -> List[models_rb.Recipe]:
 
 
 @app.get("/recipes/{idx}", response_model=schemas_rb.RecipeOutSingle)
-async def recipes(idx: int) -> models_rb.Recipe:
+async def get_recipes_by_id(idx: int) -> models_rb.Recipe:
     cur_views = await session.execute(
         select(models_rb.Recipe.views_number).filter_by(id=idx)
     )
