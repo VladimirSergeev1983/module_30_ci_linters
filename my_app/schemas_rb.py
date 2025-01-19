@@ -9,23 +9,20 @@ class BaseRecipe(BaseModel):
         title="Title of the recipe",
         min_length=2,
         max_length=50,
-        description="The name of the recipe should be from 2 to 50 characters",
+        description="Recipe name should be from 2 to 50 chars",
     )
     cooking_time: int = Field(
         ...,
         title="Cooking time",
         gt=0,
-        description="The cooking time should be greater than zero",
+        description="The cooking time should be greater than 0",
     )
     ingredients: str = Field(..., title="List of ingredients")
-    description: Optional[str] = Field(
-        ..., 
-        title="Text description of the recipe",
-    )
+    description: Optional[str] = Field(..., title="Recipe desc")
 
 
 class RecipeIn(BaseRecipe):
-    views_number: int = Field(default=0, title="Recipe view counter")
+    views_number: int = Field(default=0, title="Recipe view count")
 
 
 class RecipeOut(BaseRecipe):
