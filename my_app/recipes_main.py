@@ -2,8 +2,7 @@ import os
 from typing import List
 
 import schemas_rb
-from database_rb import Base
-from database_rb import engine
+from database_rb import Base, engine
 from database_rb import session as sess
 from fastapi import FastAPI, HTTPException
 from models_rb import Recipe
