@@ -2,6 +2,7 @@ import os
 from typing import List
 
 import schemas_rb
+from database_rb import Base
 from database_rb import engine
 from database_rb import session as sess
 from fastapi import FastAPI, HTTPException
@@ -18,7 +19,7 @@ async def startup():
     if not os.path.exists("recipe_book.db"):
         async with engine.begin() as conn:
             print("Creating DB tables.")
-            await conn.run_sync(models_rb.Base.metadata.create_all)
+            await conn.run_sync(Base.metadata.create_all)
 
 
 @app.on_event("shutdown")
@@ -29,7 +30,7 @@ async def shutdown():
 
 
 @app.post("/recipes/", response_model=schemas_rb.RecipeOut)
-async def create_recipes(recipe: schemas_rb.RecipeIn) -> models_rb.Recipe:
+async def create_recipes(recipe: schemas_rb.RecipeIn) -> Recipe:
     new_recipe = Recipe(**recipe.dict())
     async with sess.begin():
         sess.add(new_recipe)
@@ -50,6 +51,6 @@ async def get_recipes_by_id(idx: int) -> Recipe:
         raise HTTPException(status_code=404, detail="Recipe not found")
     new_views = views_num + 1
     await sess.execute(update(Recipe).filter_by(id=idx).values(views_number=new_views))
-    await session.commit()
+    await sess.commit()
     res = await sess.execute(select(Recipe).filter_by(id=idx))
     return res.scalars().first()
