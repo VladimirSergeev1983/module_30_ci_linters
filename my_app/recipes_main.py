@@ -2,9 +2,10 @@ import os
 from typing import List
 
 import schemas_rb
-from models_rb import Recipe
-from database_rb import engine, session as sess
+from database_rb import engine
+from database_rb import session as sess
 from fastapi import FastAPI, HTTPException
+from models_rb import Recipe
 from sqlalchemy import update
 from sqlalchemy.future import select
 
