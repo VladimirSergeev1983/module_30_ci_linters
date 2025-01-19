@@ -48,8 +48,7 @@ async def get_recipes_by_id(idx: int) -> Recipe:
     if views_num is None:
         raise HTTPException(status_code=404, detail="Recipe not found")
     new_views = views_num + 1
-    await sess.execute(
-        update(Recipe)
+    await sess.execute(update(Recipe)
         .filter_by(id=idx)
         .values(views_number=new_views)
     )
