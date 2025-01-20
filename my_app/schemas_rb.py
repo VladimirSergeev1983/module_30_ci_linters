@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class BaseRecipe(BaseModel):
@@ -26,17 +26,14 @@ class RecipeIn(BaseRecipe):
 
 
 class RecipeOut(BaseRecipe):
-    # id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class RecipeOutSingle(BaseRecipe):
     ...
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class RecipeOutResponse(BaseRecipe):
@@ -44,5 +41,4 @@ class RecipeOutResponse(BaseRecipe):
     ingredients: str = Field(exclude=True)
     description: Optional[str] = Field(..., exclude=True)
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
