@@ -15,11 +15,11 @@ from .schemas_rb import RecipeIn, RecipeOut, RecipeOutResponse, RecipeOutSingle
 async def lifespan(app: FastAPI):
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    print("База готова")
+    print("DB is ready")
     yield
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
-    print("База очищена")
+    print("DB is clear")
 
 
 app = FastAPI(lifespan=lifespan)
